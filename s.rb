@@ -5,6 +5,7 @@ WIDTH = 3
 HEIGHT = 3
 GRID_COLOR = Color.new('#222222')
 BLOCK_COLOR = Color.new(['orange', 'yellow', 'green'].sample)
+x_squares = []
 
 set width: WIDTH * GRID_SIZE
 set height: HEIGHT * GRID_SIZE
