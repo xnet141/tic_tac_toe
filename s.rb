@@ -19,7 +19,19 @@ end
   Line.new(y1: y, y2: y, x1: 0, x2: Window.width, width: 2, color: GRID_COLOR, z: 1)
 end
 
+def image x, y 
+  Image.new(
+    'img.png',
+    x: x, y: y,
+    width: 140, height: 140,
+    color: [3.0, 0.5, 0.2, 1.0],
+    rotate: 45,
+    z: 10
+  )
+end
 
+# xxx = X.new
+# xxx.show
 
 on :mouse_down do |event|
   # x and y coordinates of the mouse button event
@@ -27,20 +39,29 @@ on :mouse_down do |event|
 
   # Read the button event
   case event.button
-    when :left
+  when :left 
+    puts event.x
+    if event.x <= GRID_SIZE && (event.y < GRID_SIZE)
+      image 60, 60
+    elsif event.x <= GRID_SIZE * 2 && (event.y < GRID_SIZE * 2)
       Image.new(
         'img.png',
-        x: event.x, y: event.y,
+        x: 200, y: 200,
         width: 140, height: 140,
         color: [3.0, 0.5, 0.2, 1.0],
         rotate: 45,
         z: 10
       )
-      # Left mouse button pressed down
-    when :middle
-      # Middle mouse button pressed down
-    when :right
-    # Right mouse button pressed down
+    elsif event.x <= GRID_SIZE * 3 && (event.y < GRID_SIZE * 3)
+      Image.new(
+        'img.png',
+        x: 100, y: 100,
+        width: 140, height: 140,
+        color: [3.0, 0.5, 0.2, 1.0],
+        rotate: 45,
+        z: 10
+      )
+    end
   end
 end
 

@@ -57,4 +57,18 @@ Triangle.new(
   color: ['red', 'green', 'blue']
 )
 
+def image x, y 
+  Image.new(
+    'img.png',
+    x: x, y: y,
+    width: 140, height: 140,
+    color: [3.0, 0.5, 0.2, 1.0],
+    rotate: 45,
+    z: 10
+  )
+end
+
+
+image 450, 150
+
 show
