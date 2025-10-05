@@ -39,16 +39,14 @@ end
 #private
 
 def get_axis event
-  num = 0
   hh = {0..199 => [100, 0], 200..399 => [300, 1], 400..600 => [500, 2]}
-  hh.to_a.map do |key, value| # переделать на другой метод массива - покороче
-    if key.include?(event)
-      num = value
-    end
+  arr = hh.to_a.select do |key, value| 
+    key.include?(event)
   end
-  return num
+  arr[0][1]
 end
 
+# x_squares = [Array.new(3) { Array.new(3)}]
 x_squares = []
 win_squares = [
   [[0,0],[1,0],[2,0]],
@@ -56,35 +54,52 @@ win_squares = [
   [[0,2],[1,2],[2,2]]
 ]
 
+
+
 sum = 0
 arr = 0
 on :mouse_down do |event| # [get_axis(event.x)[1], get_axis(event.y)[1]]
   case event.button
   when :left 
-    if x_squares.include?(coordin_square(event.x, event.y)) == false
+    from_coordin_square = coordin_square(event.x, event.y)
+    # if x_squares.include?(from_coordin_square) == false
       image event.x, event.y
-      x_squares << coordin_square(event.x, event.y)
-      puts "add"
-      win_squares.include?
+      # x_squares[from_coordin_square[1]][from_coordin_square[0]] = from_coordin_square
+      # puts "add"
+        x_squares << from_coordin_square
+      # x_squares.sort!
+      x_squares.each.with_index do |x_square, i|
+        if x_square.include? [i, i] && i <= 2 
+          puts "x_square: #{x_square}"
+          break
+        end
+      end
+
+
+
+      puts "x_squares: #{x_squares}"
+      # puts "win!!!!!!!: #{win}"
+
+      # win_squares.include?
       # p x_squares
       p "arr: #{arr.inspect}"
-      arr = x_squares.map do |square|
-        puts "square: #{square}"
-        puts "square[0]: #{square[0]}"
-        sum += square[0]
-        p sum
+      # arr = x_squares.map do |square|
+      #   puts "square: #{square}"
+      #   puts "square[0]: #{square[0]}"
+      #   sum += square[0]
+      #   p sum
         
-        p "Win!!!!!" if sum == 3
+      #   p "Win!!!!!" if sum == 3
         
-        square[0]
-      end
-      p arr.inspect
-      arr = 0
-      p x_squares
-      x_squares
+      #   square[0]
+      # end
+      # p arr.inspect
+      # arr = 0
+      # p x_squares
+      # x_squares
       p "============"
     end
-  end
+  # end
   
   sum = 0 
 end
