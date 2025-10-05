@@ -21,10 +21,10 @@ end
 
 
 
-def image x, y 
+def image event_x, event_y 
   Image.new(
     'img.png',
-    x: x, y: y,
+    x: get_axis(event_x)[0].to_i - 70, y: get_axis(event_y)[0].to_i - 70,
     width: 140, height: 140,
     color: [3.0, 0.5, 0.2, 1.0],
     rotate: 45,
@@ -32,8 +32,8 @@ def image x, y
   )
 end
 
-def coordin x, y
-  [get_axis(x).to_i, get_axis(y).to_i]
+def coordin_square x, y
+  [get_axis(x)[1].to_i, get_axis(y)[1].to_i]
 end
 
 #private
@@ -50,26 +50,44 @@ def get_axis event
 end
 
 x_squares = []
+win_squares = [
+  [[0,0],[1,0],[2,0]],
+  [[0,1],[1,1],[2,1]],
+  [[0,2],[1,2],[2,2]]
+]
 
-
-# p "=" * 37
-
-# puts coordin 10, 201
-
-on :mouse_down do |event|
+sum = 0
+arr = 0
+on :mouse_down do |event| # [get_axis(event.x)[1], get_axis(event.y)[1]]
   case event.button
   when :left 
-    # puts event.x
-    image get_axis(event.x)[0] - 70, get_axis(event.y)[0] - 70
-    x_squares << [get_axis(event.x)[1], get_axis(event.y)[1]]
-    p x_squares
-    if x_squares[0].size == 3
-      puts "Win!!!!!!!"
+    if x_squares.include?(coordin_square(event.x, event.y)) == false
+      image event.x, event.y
+      x_squares << coordin_square(event.x, event.y)
+      puts "add"
+      win_squares.include?
+      # p x_squares
+      p "arr: #{arr.inspect}"
+      arr = x_squares.map do |square|
+        puts "square: #{square}"
+        puts "square[0]: #{square[0]}"
+        sum += square[0]
+        p sum
+        
+        p "Win!!!!!" if sum == 3
+        
+        square[0]
+      end
+      p arr.inspect
+      arr = 0
+      p x_squares
+      x_squares
+      p "============"
     end
   end
+  
+  sum = 0 
 end
-
-
 
 show
 
