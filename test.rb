@@ -53,9 +53,13 @@ def get_axis event
   arr[0][1]
 end
 
-x_squares = Array.new(3) { Array.new(3)}
-# x_squares = []
-win_squares = [
+x_squares_0= Array.new(3) { Array.new(3)}
+x_squares_1 = Array.new(3) { Array.new(3)}
+x_squares_2 = Array.new(3) { Array.new(3)}
+
+x_squares = [x_squares_0, x_squares_1]#, x_squares_2]
+
+win_squares_1 = [
   [[0,0],[1,0],[2,0]],
   [[0,1],[1,1],[2,1]],
   [[0,2],[1,2],[2,2]]
@@ -74,22 +78,37 @@ win_squares_3 = [
 on :mouse_down do |event| # [get_axis(event.x)[1], get_axis(event.y)[1]]
 
   case event.button
+    
   when :left 
-    p x_squares
+    p x_squares_1
     p axis_part(event.y)
     p axis_part(event.x)
-    image event.x, event.y
 
-    x_squares[axis_part(event.x)][axis_part(event.y)] = axis_part(event.x), axis_part(event.y)
-    x_squares.each.with_index do |square, i| # СЛОЖИТЬ ИТЫЕ
-      if !square.include? nil
-        puts "x_square: #{square}"
-      else
-        puts "X_winnnn!!!!!dadadsdasdasdsa"
+    
+    count = 0
+    x_squares[0][axis_part(event.y)][axis_part(event.x)] = axis_part(event.x), axis_part(event.y)
+    x_squares[1][axis_part(event.x)][axis_part(event.y)] = axis_part(event.x), axis_part(event.y)
+    # x_squares[2][axis_part(event.y)][axis_part(event.x)] = axis_part(event.x), axis_part(event.y)
+    while count <= 1 # 2
+      x_squares[count].each.with_index do |square, i| # СЛОЖИТЬ ИТЫЕ
+        if square.include? nil
+          image event.x, event.y
+          puts "x_square: #{square}"
+        else
+          image event.x, event.y
+          puts "X_winnnn!!!!!dadadsdasdasdsa"
+          image event.x, event.y
+          sleep 7
+          image event.x, event.y
+          exit
+        end
       end
+      count += 1
     end
   end
 end
+
+# puts "!!!!!!!!!!!!!!!!!!!!!!!!!"
 
 show
 
