@@ -21,10 +21,10 @@ end
 
 
 
-def image event_x, event_y 
+def image x, y 
   Image.new(
     'img.png',
-    x: get_axis(event_x)[0].to_i - 70, y: get_axis(event_y)[0].to_i - 70,
+    x: axis_coord(x).to_i - 70, y: axis_coord(y).to_i - 70,
     width: 140, height: 140,
     color: [3.0, 0.5, 0.2, 1.0],
     rotate: 45,
@@ -32,10 +32,17 @@ def image event_x, event_y
   )
 end
 
-def coordin_square x, y
-  [get_axis(x)[1].to_i, get_axis(y)[1].to_i]
+# def coordin_square x, y
+#   [get_axis(x)[1].to_i, get_axis(y)[1].to_i]
+# end
+
+def axis_coord n
+  get_axis(n)[0]
 end
 
+def axis_part n
+  get_axis(n)[1]
+end
 #private
 
 def get_axis event
@@ -46,62 +53,42 @@ def get_axis event
   arr[0][1]
 end
 
-# x_squares = [Array.new(3) { Array.new(3)}]
-x_squares = []
+x_squares = Array.new(3) { Array.new(3)}
+# x_squares = []
 win_squares = [
   [[0,0],[1,0],[2,0]],
   [[0,1],[1,1],[2,1]],
   [[0,2],[1,2],[2,2]]
 ]
+win_squares_2 = [
+  [[0,0],[0,1],[0,2]],
+  [[1,0],[1,1],[1,2]],
+  [[2,0],[2,1],[2,2]]  
+]
+win_squares_3 = [
+  [[0,0],[1,1],[2,2]],
+  [[2,0],[1,1],[0,2]] 
+]
 
 
-
-sum = 0
-arr = 0
 on :mouse_down do |event| # [get_axis(event.x)[1], get_axis(event.y)[1]]
+
   case event.button
   when :left 
-    from_coordin_square = coordin_square(event.x, event.y)
-    # if x_squares.include?(from_coordin_square) == false
-      image event.x, event.y
-      # x_squares[from_coordin_square[1]][from_coordin_square[0]] = from_coordin_square
-      # puts "add"
-        x_squares << from_coordin_square
-      # x_squares.sort!
-      x_squares.each.with_index do |x_square, i|
-        if x_square.include? [i, i] && i <= 2 
-          puts "x_square: #{x_square}"
-          break
-        end
+    p x_squares
+    p axis_part(event.y)
+    p axis_part(event.x)
+    image event.x, event.y
+
+    x_squares[axis_part(event.x)][axis_part(event.y)] = axis_part(event.x), axis_part(event.y)
+    x_squares.each.with_index do |square, i| # СЛОЖИТЬ ИТЫЕ
+      if !square.include? nil
+        puts "x_square: #{square}"
+      else
+        puts "X_winnnn!!!!!dadadsdasdasdsa"
       end
-
-
-
-      puts "x_squares: #{x_squares}"
-      # puts "win!!!!!!!: #{win}"
-
-      # win_squares.include?
-      # p x_squares
-      p "arr: #{arr.inspect}"
-      # arr = x_squares.map do |square|
-      #   puts "square: #{square}"
-      #   puts "square[0]: #{square[0]}"
-      #   sum += square[0]
-      #   p sum
-        
-      #   p "Win!!!!!" if sum == 3
-        
-      #   square[0]
-      # end
-      # p arr.inspect
-      # arr = 0
-      # p x_squares
-      # x_squares
-      p "============"
     end
-  # end
-  
-  sum = 0 
+  end
 end
 
 show
