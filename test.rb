@@ -19,7 +19,6 @@ end
   Line.new(y1: y, y2: y, x1: 0, x2: Window.width, width: 2, color: GRID_COLOR, z: 1)
 end
 
-
 def image x, y 
   Image.new(
     'img.png',
@@ -77,12 +76,30 @@ def get_axis event
   arr[0][1]
 end
 
+def x_squares_for_victory array
+  p "def square ===================== begin"
+  array.dup.map!.with_index do |square, i| # СЛОЖИТЬ i
+    p "square #{square}"
+    square.rotate!(1) if i == 0
+    square.rotate!(2) if i == 2
+    p "square rotate#{square}"
+    if square.include?(nil)# || !square.rotate(-1).include?(nil) || !square.rotate(1).include?(nil)
+      puts "x_square#{i}: #{square}"
+    else
+      image 200, 200
+      puts "Rotate Victory!!!!!!!!!!!!!!!!!"
+      show_win_squares square # sleep
+      game = "stop"
+    end
+  end
+  p "def square ===================== end"
+end
+
 x_squares_0 = Array.new(3) { Array.new(3)}
 x_squares_1 = Array.new(3) { Array.new(3)}
 x_squares_2 = Array.new(3) { Array.new(3)}
 
-x_squares = [x_squares_0, x_squares_1]#, x_squares_2]
-
+x_squares = [x_squares_0, x_squares_1, x_squares_2]
 
 win_squares_1 = [
   [[0,0],[1,0],[2,0]],
@@ -104,27 +121,34 @@ on :mouse_down do |event| # [get_axis(event.x)[1], get_axis(event.y)[1]]
   case event.button
   when :left
     if game!= "stop" 
-      p x_squares_1
+      p "!!!x_squares_1: #{x_squares_1}"
       p axis_part(event.y)
       p axis_part(event.x)
 
       # image event.x, event.y
       circle event.x, event.y
-      count = 0
+      count = 0 # rotate
       x_squares[0][axis_part(event.y)][axis_part(event.x)] = axis_part(event.x), axis_part(event.y)
       x_squares[1][axis_part(event.x)][axis_part(event.y)] = axis_part(event.x), axis_part(event.y)
       # x_squares[2][axis_part(event.y)][axis_part(event.x)] = axis_part(event.x), axis_part(event.y)
+      p "================="
+      p "x_squares 2 #{x_squares[2]}"
+      #  x_squares[2][0].rotate!(1)
+      #  x_squares[2][2].rotate!(1)
+      p "x_squares 2 #{x_squares[2]}"
+      p "=================="
       while count < 2 # 2
-        x_squares[count].map do |square| # СЛОЖИТЬ i
-          if square.include? nil
-            puts "x_square: #{square}"
+        x_squares[count].each.with_index do |square, i| # СЛОЖИТЬ i
+          if square.include?(nil)# || !square.rotate(-1).include?(nil) || !square.rotate(1).include?(nil)
+            puts "x_square#{i}: #{square}"
           else
             image 200, 200
-            puts "X_winnnn!!!!!dadadsdasdasdsa"
+            puts "Victory!!!!!!!!!!!!!!!!!"
             show_win_squares square # sleep
             game = "stop"
           end
         end
+        x_squares_for_victory x_squares[count]
         count += 1
       end
     end
@@ -132,6 +156,7 @@ on :mouse_down do |event| # [get_axis(event.x)[1], get_axis(event.y)[1]]
     close
   end
 end
+
 
 
 
