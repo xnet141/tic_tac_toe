@@ -68,6 +68,15 @@ def image x, y
   )
 end
 
+Quad.new(
+  x1: 275, y1: 175,
+  x2: 375, y2: 225,
+  x3: 300, y3: 350,
+  x4: 250, y4: 250,
+  color: 'aqua',
+  z: 10
+)
+
 
 image 450, 150
 
