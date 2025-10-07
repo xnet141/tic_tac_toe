@@ -19,26 +19,7 @@ end
   Line.new(y1: y, y2: y, x1: 0, x2: Window.width, width: 2, color: GRID_COLOR, z: 1)
 end
 
-
-# win_squares_1 = [
-#   [[0,0],[1,0],[2,0]],
-#   [[0,1],[1,1],[2,1]],
-#   [[0,2],[1,2],[2,2]]
-# ]
-# win_squares_2 = [
-#   [[0,0],[0,1],[0,2]],
-#   [[1,0],[1,1],[1,2]],
-#   [[2,0],[2,1],[2,2]]  
-# ]
-# win_squares_3 = [
-#   [[0,0],[1,1],[2,2]],
-#   [[2,0],[1,1],[0,2]] 
-# ]
-
 array = Array.new(3) { Array.new(3)}
-
-
-
 
 def circle x, y
   Circle.new(
@@ -53,7 +34,7 @@ end
 
 def image x, y 
   Image.new(
-    'img.png',
+    'images/img.png',
     x: axis_coord(x).to_i - 70, y: axis_coord(y).to_i - 70,
     width: 140, height: 140,
     color: [3.0, 0.5, 0.2, 1.0],
@@ -89,8 +70,17 @@ def show_win_squares squares
   end
 end
 
-def diagonal_squares_victory array, game
-  squares_arr = [[array[0][0],array[1][1],array[2][2]], [array[0][2],array[1][1],array[2][0]]]
+def squares_victory array, game
+  squares_arr = [
+                 [array[0][0],array[1][0],array[2][0]], 
+                 [array[0][1],array[1][1],array[2][1]],
+                 [array[0][2],array[1][2],array[2][2]], 
+                 [array[0][0],array[0][1],array[0][2]],
+                 [array[1][0],array[1][1],array[1][2]], 
+                 [array[2][0],array[2][1],array[2][2]],
+                 [array[0][0],array[1][1],array[2][2]], 
+                 [array[0][2],array[1][1],array[2][0]],
+                ]
   squares_arr.each do |squares| 
     if !squares.include?(nil)
       show_win_squares(squares) 
@@ -101,35 +91,21 @@ def diagonal_squares_victory array, game
   end  
 end
 
-def line_squares_victory array, game
-  array.each.with_index do |square, i| 
-    if square.include?(nil)
-      puts "x_square#{i}: #{square}"
-    else
-      image 200, 200
-      puts "Victory!!!!!!!!!!!!!!!!!"
-      show_win_squares(square) 
-      @game = "stop"
-    end
-  end
-end
-
 @game = nil
-on :mouse_down do |event| # [get_axis(event.x)[1], get_axis(event.y)[1]]
+on :mouse_down do |event| 
   case event.button
   when :left
     if @game != "stop"
       array[axis_part(event.y)][axis_part(event.x)] = axis_part(event.x), axis_part(event.y)
       circle event.x, event.y
   
-      diagonal_squares_victory array, @game
-      line_squares_victory array, @game
-      puts "==game====: #{@game}"
+      squares_victory array, @game
     end  
   when :right
     close
   end
 end
+
 
 show
 
