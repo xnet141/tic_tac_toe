@@ -7,3 +7,5 @@ def get_axis event
 end
 
 p get_axis 50
+
+p ((10..100).step(10)).map {|x| p x} 

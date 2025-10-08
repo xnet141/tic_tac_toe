@@ -33,11 +33,11 @@ end
 
 def image x, y 
   Image.new(
-    'images/img.png',
-    x: axis(x) * GRID_SIZE + GRID_SIZE/2 - 70, y: axis(y) * GRID_SIZE + GRID_SIZE/2 - 70,
-    width: 140, height: 140,
-    color: [3.0, 0.5, 0.2, 1.0],
-    rotate: 45,
+    'images/game_over.png',
+    x: axis(x) * GRID_SIZE + GRID_SIZE/2 - 150, y: axis(y) * GRID_SIZE + GRID_SIZE/2 - 150,
+    width: 300, height: 300,
+    color: [1.0, 1.1, 0.2, 0.67],
+    rotate: 0,
     z: 10
     )
 end
