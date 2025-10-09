@@ -1,6 +1,6 @@
 require 'ruby2d'
-require_relative 'player'
-require_relative 'logic'
+require_relative 'lib/player'
+require_relative 'lib/logic'
 
 set title: "Hello!"
 
@@ -21,19 +21,15 @@ end
   Line.new(y1: y, y2: y, x1: 0, x2: Window.width, width: 2, color: GRID_COLOR, z: 1)
 end
 
+player = Player.new
+logic = Logic.new
 
-
-
-
-@game = nil
 on :mouse_down do |event| 
   case event.button
   when :left
     if logic.game_start # == true
       player.circle event.x, event.y
-      logic.array(event.y,event.x) # переделать = axis(event.x), axis(event.y)
-      logic.squares_victory 
-      logic.game_over
+      logic.logic event.x, event.y
     end  
   when :right
     close
