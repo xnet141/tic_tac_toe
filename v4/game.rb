@@ -28,7 +28,7 @@ on :mouse_down do |event|
   case event.button
   when :left
     if logic.game_start # == true
-      player.circle event.x, event.y
+      # player.circle event.x, event.y
       logic.logic event.x, event.y
     end  
   when :right
