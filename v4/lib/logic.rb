@@ -10,14 +10,13 @@ class Logic < Board
   end
   
   private
-  
  
   def win_squares x, y
-    @x_y << choose_square(x, y)
-    p @x_y
+    choose_square(x, y)
+    
     array_win_squares(@array).each do |squares| 
       if !squares.include?(nil)
-        show_win_squares @x_y
+        show_win_squares squares
         game_over 1, 1
         # return squares 
       end
@@ -25,18 +24,19 @@ class Logic < Board
   end
 
   def choose_square x, y
-    @array[x][y] = Circle.new(
+    @array[x][y] = CircleWithArray.new(
                      x: x * GRID_SIZE + GRID_SIZE/2, y: y * GRID_SIZE + GRID_SIZE/2,
                      radius: 75,
                      sectors: 32,
                      color: 'fuchsia',
-                     z: 10
+                     z: 10,
+                     data: [x, y] # show_win_squares squares => x: square[0] * GRID_SIZE, y: square[1] * GRID_SIZE, 
                    )
-    [x, y]
+    
   end
   
-  def show_win_squares x_y
-    x_y.each do |square|
+  def show_win_squares squares
+    squares.each do |square|
       p square
       Square.new(
         x: square[0] * GRID_SIZE, y: square[1] * GRID_SIZE,
