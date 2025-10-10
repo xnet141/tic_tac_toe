@@ -21,15 +21,24 @@ end
   Line.new(y1: y, y2: y, x1: 0, x2: Window.width, width: 2, color: GRID_COLOR, z: 1)
 end
 
-player = Player.new
+player1 = Player1.new
+player2 = Player2.new
 logic = Logic.new
 
 on :mouse_down do |event| 
   case event.button
   when :left
     if logic.game_start # == true
-      # player.circle event.x, event.y
-      logic.logic event.x, event.y
+      if player1.turn
+        puts "Player1"
+        player1.logic event.x, event.y
+        p logic.game_start
+      else
+        puts "Player2"
+        player2.logic event.x, event.y
+        
+        p logic.game_start
+      end
     end  
   when :right
     close

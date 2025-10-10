@@ -72,3 +72,4 @@ end
 
 nick = Nick.new(x: 1, y: 3, z: 42)
 p nick
+p nick.class

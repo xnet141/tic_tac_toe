@@ -1,40 +1,42 @@
 require_relative 'board'
 
 class Logic < Board
-
- 
   def logic event_x, event_y 
-    x = axis(event_x) 
-    y = axis(event_y)
+    x = axis event_x
+    y = axis event_y
     win_squares x, y
   end
   
   private
- 
+
   def win_squares x, y
-    choose_square(x, y)
+    p choose_square x, y if square_nil? x, y
     
     array_win_squares(@array).each do |squares| 
-      if !squares.include?(nil)
+      if squares.all? {|el| el != nil && (el.class == squares.first.class)}
         show_win_squares squares
         game_over 1, 1
         # return squares 
       end
     end  
   end
-
+    
   def choose_square x, y
     @array[x][y] = CircleWithArray.new(
-                     x: x * GRID_SIZE + GRID_SIZE/2, y: y * GRID_SIZE + GRID_SIZE/2,
-                     radius: 75,
-                     sectors: 32,
-                     color: 'fuchsia',
-                     z: 10,
-                     data: [x, y] # show_win_squares squares => x: square[0] * GRID_SIZE, y: square[1] * GRID_SIZE, 
-                   )
-    
+      x: x * GRID_SIZE + GRID_SIZE/2, y: y * GRID_SIZE + GRID_SIZE/2,
+      radius: 75,
+      sectors: 32,
+      color: 'fuchsia',
+      z: 2,
+      data: [x, y] # show_win_squares squares => x: square[0] * GRID_SIZE, y: square[1] * GRID_SIZE, 
+      )
+      
   end
-  
+    
+  def square_nil? x, y
+    @array[x][y] == nil
+  end
+
   def show_win_squares squares
     squares.each do |square|
       p square

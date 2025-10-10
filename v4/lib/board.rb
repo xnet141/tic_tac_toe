@@ -4,7 +4,6 @@ class Board
   def initialize
     @array = Array.new(3) { Array.new(3)}
     @game_start = true
-     @x_y = []
   end
 
   private
