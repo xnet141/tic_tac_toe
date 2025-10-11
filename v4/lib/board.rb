@@ -1,6 +1,6 @@
 class Board
   @game_start = true
-  
+
   def initialize
     @array = Array.new(3) { Array.new(3)}
   end
@@ -8,7 +8,7 @@ class Board
   private
 
   class << self
-    attr_accessor :game_start # нужна ли?
+    attr_accessor :game_start
   end
 
   class CircleWithArray < Circle

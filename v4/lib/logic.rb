@@ -6,6 +6,10 @@ class Logic < Board
     y = axis event_y
     win_squares x, y
   end
+
+  def game_start
+    self.class.superclass.superclass.game_start
+  end
   
   private
 
@@ -38,7 +42,6 @@ class Logic < Board
 
   def show_win_squares squares
     squares.each do |square|
-      # p square
       Square.new(
         x: square[0] * GRID_SIZE, y: square[1] * GRID_SIZE,
         size: GRID_SIZE,
