@@ -113,3 +113,17 @@ p Shared.s
 s = Shared.new
 p "=================="
 p s.get_s_and_inst
+p "==========================================="
+
+class Red
+  def initialize x: 100, y: y, z: {}
+    hash = {name: "Alex", surname: "Petrov"}
+    @x = x
+    @y = y
+    @z = hash[z]
+  end
+end
+
+red = Red.new x: 333, y: 222, z: :name
+p red
+

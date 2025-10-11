@@ -17,23 +17,12 @@ class Logic < Board
     p choose_square x, y if square_nil? x, y
     
     array_win_squares(@array).each do |squares| 
-      if squares.all? {|el| el != nil && (el.class == squares.first.class)}
+      if squares.all? {|el| el != nil && el.class == squares.first.class}
         show_win_squares squares
         game_over 1, 1
         # return squares 
       end
     end  
-  end
-    
-  def choose_square x, y
-    @array[x][y] = CircleWithArray.new(
-      x: x * GRID_SIZE + GRID_SIZE/2, y: y * GRID_SIZE + GRID_SIZE/2,
-      radius: 75,
-      sectors: 32,
-      color: 'fuchsia',
-      z: 2,
-      data: [x, y] # show_win_squares squares => x: square[0] * GRID_SIZE, y: square[1] * GRID_SIZE, 
-      )
   end
     
   def square_nil? x, y
