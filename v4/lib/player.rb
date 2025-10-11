@@ -12,6 +12,9 @@ class Player1 < Logic
 end
 
 class Player2 < Logic
+  def initialize
+    super
+  end
 end
 
 

@@ -30,7 +30,6 @@ class Logic < Board
       z: 2,
       data: [x, y] # show_win_squares squares => x: square[0] * GRID_SIZE, y: square[1] * GRID_SIZE, 
       )
-      
   end
     
   def square_nil? x, y
@@ -39,7 +38,7 @@ class Logic < Board
 
   def show_win_squares squares
     squares.each do |square|
-      p square
+      # p square
       Square.new(
         x: square[0] * GRID_SIZE, y: square[1] * GRID_SIZE,
         size: GRID_SIZE,
@@ -48,9 +47,10 @@ class Logic < Board
       )
     end
   end
-
+  
   def game_over x, y
-    @game_start = !@game_start
+    puts "#{self.class} Win!!!!!!"
+    self.class.superclass.superclass.game_start = false
     Image.new(
       'images/game_over.png',
       x: x * GRID_SIZE - 50, y: y * GRID_SIZE - 50,

@@ -70,6 +70,46 @@ class Nick < Alex
   end
 end
 
+class Test < Nick
+  attr_accessor :test
+
+  def initialize
+    @test = true
+  end
+end
+
+t = Test.new
+
 nick = Nick.new(x: 1, y: 3, z: 42)
 p nick
 p nick.class
+p nick.class.superclass
+p t.class.superclass.superclass
+
+t.test = 1
+p t.test
+
+class Shared
+  @s = "ttttt"
+  @inst = "bla"
+
+  class << self
+    attr_accessor :s
+    def test_s
+
+    end
+  end
+
+  def get_s_and_inst
+    self.class.s
+  end
+end
+
+Shared.s = 2
+
+p Shared.s
+
+
+s = Shared.new
+p "=================="
+p s.get_s_and_inst

@@ -1,12 +1,15 @@
 class Board
-  attr_accessor :game_start
-
+  @game_start = true
+  
   def initialize
     @array = Array.new(3) { Array.new(3)}
-    @game_start = true
   end
 
   private
+
+  class << self
+    attr_accessor :game_start # нужна ли?
+  end
 
   class CircleWithArray < Circle
     def initialize(x: 25, y: 25, z: 0, radius: 50, sectors: 30,
