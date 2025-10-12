@@ -2,9 +2,10 @@ require_relative 'board'
 
 class Logic < Board
   def logic event_x, event_y 
+    array = self.class.superclass.superclass.array
     x = axis event_x
     y = axis event_y
-    win_squares x, y
+    win_squares x, y, array
   end
 
   def game_start
@@ -13,20 +14,34 @@ class Logic < Board
   
   private
 
-  def win_squares x, y
-    p choose_square x, y if square_nil? x, y
-    
-    array_win_squares(@array).each do |squares| 
-      if squares.all? {|el| el != nil && el.class == squares.first.class}
-        show_win_squares squares
-        game_over 1, 1
-        # return squares 
+  def win_squares x, y, array
+    if square_nil? x, y, array
+      p "square_nil? x, y #{square_nil? x, y, array}"
+      p choose_square x, y, array
+
+      array_win_squares(array).each do |squares| 
+        if squares.all? {|square| square != nil && square.class == squares.first.class}
+          show_win_squares squares
+          game_over 1, 1
+          # return squares
+        end 
       end
+
+      if squares_all_none_nil? array
+        return game_over 1, 1 
+      end
+      p "no_nil_squares #{squares_all_none_nil? array}"
+    else
+      puts "!!Choose a free square!!"
     end  
+  end  
+  
+  def squares_all_none_nil? array
+    array_win_squares(array).all? {|squares| squares.none?(nil)}
   end
-    
-  def square_nil? x, y
-    @array[x][y] == nil
+
+  def square_nil? x, y, array
+    array[x][y] == nil
   end
 
   def show_win_squares squares
@@ -41,8 +56,8 @@ class Logic < Board
   end
   
   def game_over x, y
-    puts "#{self.class} Win!!!!!!"
     self.class.superclass.superclass.game_start = false
+    puts "#{self.class} Win!!!!!!"
     Image.new(
       'images/game_over.png',
       x: x * GRID_SIZE - 50, y: y * GRID_SIZE - 50,

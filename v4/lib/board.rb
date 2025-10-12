@@ -1,14 +1,11 @@
 class Board
   @game_start = true
-
-  def initialize
-    @array = Array.new(3) { Array.new(3)}
-  end
+  @array = Array.new(3) { Array.new(3)}
 
   private
 
   class << self
-    attr_accessor :game_start
+    attr_accessor :game_start, :array
   end
 
   class CircleWithArray < Circle
@@ -53,8 +50,6 @@ class Board
       end
     end
   end
-
-
 
   def axis event
     hh = {0..199 => 0, 200..399 => 1, 400..600 => 2}

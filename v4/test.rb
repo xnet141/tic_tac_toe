@@ -122,8 +122,27 @@ class Red
     @y = y
     @z = hash[z]
   end
+
+  @test = "From @test"
+
+  class << self 
+    attr_accessor :test
+  end
+  
+  def r
+    puts "Hi! from r"
+  end
 end
 
 red = Red.new x: 333, y: 222, z: :name
 p red
+
+class DescendantRed < Red
+  def from_red
+    self.class.superclass
+  end
+end
+
+descendant_red = DescendantRed.new
+p descendant_red.from_red 
 

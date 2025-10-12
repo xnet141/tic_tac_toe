@@ -27,6 +27,8 @@ on :mouse_down do |event|
   case event.button
   when :left
     if player1.game_start # == true
+      p "player2.game_start: #{player2.game_start}"
+      p "player1.game_start: #{player1.game_start}"
       if player1.turn
         puts "==Player1=="
         player1.logic event.x, event.y
@@ -36,6 +38,8 @@ on :mouse_down do |event|
         player2.logic event.x, event.y
         p "=" * 43
       end
+      p "player2.game_start: #{player2.game_start}"
+      p "player1.game_start: #{player1.game_start}"
     end  
   when :right
     close
