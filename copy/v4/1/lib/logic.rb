@@ -2,10 +2,11 @@ require_relative 'board'
 
 class Logic < Board
   def logic event_x, event_y 
+    array_win_squares = Board.array_win_squares
     array = Board.array # self.class.superclass.superclass.array
     x = axis event_x
     y = axis event_y
-    win_squares x, y, array
+    win_squares x, y, array, array_win_squares
   end
 
   def game_start
@@ -19,7 +20,8 @@ class Logic < Board
       p "square_nil? x, y #{square_nil? x, y, array}"
       p choose_square x, y, array
 
-      array_win_squares(array).each do |squares| 
+      Board.array_win_squares.each do |squares|
+        p squares.inspect 
         if squares.all? {|square| square != nil && square.class == squares.first.class}
           show_win_squares squares
           game_over 1, 1
@@ -27,17 +29,17 @@ class Logic < Board
         end 
       end
 
-      if squares_all_none_nil? array
+      if squares_all_none_nil? Board.array_win_squares
         return game_over 1, 1 
       end
-      p "no_nil_squares #{squares_all_none_nil? array}"
+      p "no_nil_squares #{squares_all_none_nil? array_win_squares}"
     else
-      puts "==!! Choose a free square !!=="
+      puts "!!Choose a free square!!"
     end  
   end  
   
-  def squares_all_none_nil? array
-    array_win_squares(array).all? {|squares| squares.none?(nil)}
+  def squares_all_none_nil? array_win_squares
+    array_win_squares.all? {|squares| squares.none?(nil)}
   end
 
   def square_nil? x, y, array
