@@ -129,8 +129,9 @@ class Red
     attr_accessor :test
   end
   
-  def r
+  def r par
     puts "Hi! from r"
+    2 + par
   end
 end
 
@@ -141,8 +142,16 @@ class DescendantRed < Red
   def from_red
     self.class.superclass
   end
+
+  def r par, par1
+    # super(par)
+    return par1 + super(par)
+  end
 end
 
 descendant_red = DescendantRed.new
 p descendant_red.from_red 
+p descendant_red.r 10, 10 
+
+
 
